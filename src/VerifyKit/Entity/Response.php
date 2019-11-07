@@ -1,10 +1,10 @@
 <?php
 
-namespace VerifyKit\entity;
+namespace VerifyKit\Entity;
 
 /**
  * Class Response
- * @package VerifyKit\entity
+ * @package VerifyKit\Entity
  */
 class Response
 {

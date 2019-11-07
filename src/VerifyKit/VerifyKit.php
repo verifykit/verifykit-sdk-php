@@ -2,8 +2,8 @@
 
 namespace VerifyKit;
 
-use VerifyKit\entity\Response;
-use VerifyKit\exception\CurlException;
+use VerifyKit\Entity\Response;
+use VerifyKit\Exception\CurlException;
 
 /**
  * Class VerifyKit

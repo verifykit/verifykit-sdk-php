@@ -1,6 +1,6 @@
 <?php
 
-namespace VerifyKit\exception;
+namespace VerifyKit\Exception;
 
 class CurlException extends \Exception
 {
