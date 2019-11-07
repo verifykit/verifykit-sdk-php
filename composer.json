@@ -1,0 +1,10 @@
+{
+  "name": "verifykit/verifykit-sdk-php",
+  "type": "library",
+  "description": "VerifyKit is the next gen phone number validation system. Users can easily verify their phone numbers without the need of entering phone number or a pin code.",
+  "keywords": [
+    "verifykit"
+  ],
+  "homepage": "https://verifykit.com",
+  "license": "MIT"
+}
