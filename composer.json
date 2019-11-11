@@ -11,5 +11,10 @@
     "php": ">=5.5.0",
     "ext-curl": "*",
     "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "VerifyKit\\": "src/"
+    }
   }
 }
