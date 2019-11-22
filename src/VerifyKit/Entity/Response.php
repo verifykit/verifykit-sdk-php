@@ -30,10 +30,33 @@ class Response
     private $errorMessage;
 
     /** @var bool */
-    private $success;
+    private $success = false;
 
     /**
-     * @return string
+     * Response constructor.
+     * @param $response
+     * @throws \Exception
+     */
+    public function __construct($response)
+    {
+        $response = json_decode($response, true);
+        $meta = $response["meta"];
+        $this->requestId = isset($meta["requestId"]) ? $meta["requestId"] : null;
+        $this->httpStatusCode = isset($meta["httpStatusCode"]) ? $meta["httpStatusCode"] : null;
+        if (isset($meta["errorMessage"]) && isset($meta["errorCode"])) {
+            $this->errorCode = $meta["errorCode"];
+            $this->errorMessage = $meta["errorMessage"];
+        } elseif (isset($response["result"])) {
+            $result = $response["result"];
+            $this->success = true;
+            $this->phoneNumber = isset($result["phoneNumber"]) ? $result["phoneNumber"] : null;
+            $this->validationType = isset($result["validationType"]) ? $result["validationType"] : null;
+            $this->validationDate = isset($result["validationDate"]) ? new \DateTime($result["validationDate"]) : null;
+        }
+    }
+
+    /**
+     * @return string|null
      */
     public function getRequestId()
     {
@@ -41,15 +64,7 @@ class Response
     }
 
     /**
-     * @param string $requestId
-     */
-    public function setRequestId($requestId)
-    {
-        $this->requestId = $requestId;
-    }
-
-    /**
-     * @return int
+     * @return int|null
      */
     public function getHttpStatusCode()
     {
@@ -57,15 +72,7 @@ class Response
     }
 
     /**
-     * @param int $httpStatusCode
-     */
-    public function setHttpStatusCode($httpStatusCode)
-    {
-        $this->httpStatusCode = $httpStatusCode;
-    }
-
-    /**
-     * @return string
+     * @return string|null
      */
     public function getValidationType()
     {
@@ -73,15 +80,7 @@ class Response
     }
 
     /**
-     * @param string $validationType
-     */
-    public function setValidationType($validationType)
-    {
-        $this->validationType = $validationType;
-    }
-
-    /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getValidationDate()
     {
@@ -89,15 +88,7 @@ class Response
     }
 
     /**
-     * @param \DateTime $validationDate
-     */
-    public function setValidationDate($validationDate)
-    {
-        $this->validationDate = $validationDate;
-    }
-
-    /**
-     * @return string
+     * @return string|null
      */
     public function getPhoneNumber()
     {
@@ -105,43 +96,20 @@ class Response
     }
 
     /**
-     * @param string $phoneNumber
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
-    }
-
-    /**
-     * @return string
+     * @return string|null
      */
     public function getErrorCode()
     {
         return $this->errorCode;
     }
 
-    /**
-     * @param string $errorCode
-     */
-    public function setErrorCode($errorCode)
-    {
-        $this->errorCode = $errorCode;
-    }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getErrorMessage()
     {
         return $this->errorMessage;
-    }
-
-    /**
-     * @param string $errorMessage
-     */
-    public function setErrorMessage($errorMessage)
-    {
-        $this->errorMessage = $errorMessage;
     }
 
     /**
@@ -151,13 +119,4 @@ class Response
     {
         return $this->success;
     }
-
-    /**
-     * @param bool $success
-     */
-    public function setSuccess($success)
-    {
-        $this->success = $success;
-    }
-
 }
