@@ -11,7 +11,7 @@ VerifyKit is the next gen phone number validation system. Users can easily verif
 
 ## Installation
 
-You can install pip package
+You can install via composer
 
 ```bash
 composer install verifykit/verifykit-sdk-php
