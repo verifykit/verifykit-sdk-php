@@ -4,9 +4,12 @@ namespace VerifyKit;
 
 use VerifyKit\Entity\Response;
 use VerifyKit\Exception\CurlException;
+use VerifyKit\Exception\ServerKeyEmptyException;
+use VerifyKit\Exception\SessionIdEmptyException;
 
 /**
  * Class VerifyKit
+ * @classNo 835
  */
 class VerifyKit
 {
@@ -19,9 +22,13 @@ class VerifyKit
     /**
      * VerifyKit constructor.
      * @param $serverKey
+     * @throws ServerKeyEmptyException
      */
     public function __construct($serverKey)
     {
+        if (null === $serverKey || $serverKey == "") {
+            throw new ServerKeyEmptyException("Server key cannot be empty.", 835001);
+        }
         $this->serverKey = $serverKey;
     }
 
@@ -33,6 +40,10 @@ class VerifyKit
      */
     public function getResult($sessionId)
     {
+        if (null === $sessionId || $sessionId == "") {
+            throw new SessionIdEmptyException("Session id cannot be empty.", 835002);
+        }
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
