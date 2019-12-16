@@ -19,17 +19,26 @@ class VerifyKit
     /** @var string */
     private $serverKey;
 
+    /** @var string */
+    private $clientIp = null;
+
     /**
      * VerifyKit constructor.
      * @param $serverKey
+     * @param $clientIp
      * @throws ServerKeyEmptyException
      */
-    public function __construct($serverKey)
+    public function __construct($serverKey, $clientIp = null)
     {
         if (null === $serverKey || $serverKey == "") {
             throw new ServerKeyEmptyException("Server key cannot be empty.", 835001);
         }
         $this->serverKey = $serverKey;
+
+        if (!$clientIp) {
+            $clientIp = $_SERVER["REMOTE_ADDR"];
+        }
+        $this->clientIp = $clientIp;
     }
 
     /**
@@ -57,7 +66,8 @@ class VerifyKit
             CURLOPT_HTTPHEADER => array(
                 "X-Vfk-Server-Key: " . $this->serverKey,
                 "cache-control: no-cache",
-                "content-type: multipart/form-data;"
+                "content-type: multipart/form-data;",
+                "X-Vfk-Forwarded-For: " . $this->clientIp
             ),
         ));
 
