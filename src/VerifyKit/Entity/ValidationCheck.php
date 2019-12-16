@@ -43,10 +43,10 @@ class ValidationCheck
             $this->errorMessage = $meta["errorMessage"];
         } elseif (isset($response["result"])) {
             $result = $response["result"];
-            $this->setSuccess(true);
-            $this->setValidationStatus($result["validationStatus"]);
-            $this->setSessionId($result["sessionId"]);
-            $this->setAppPlatform($result["appPlatform"]);
+            $this->success = true;
+            $this->validationStatus = $result["validationStatus"];
+            $this->sessionId = $result["sessionId"];
+            $this->appPlatform = $result["appPlatform"];
         }
     }
 
@@ -59,27 +59,11 @@ class ValidationCheck
     }
 
     /**
-     * @param string $requestId
-     */
-    public function setRequestId($requestId)
-    {
-        $this->requestId = $requestId;
-    }
-
-    /**
      * @return int
      */
     public function getHttpStatusCode()
     {
         return $this->httpStatusCode;
-    }
-
-    /**
-     * @param int $httpStatusCode
-     */
-    public function setHttpStatusCode($httpStatusCode)
-    {
-        $this->httpStatusCode = $httpStatusCode;
     }
 
     /**
@@ -91,27 +75,11 @@ class ValidationCheck
     }
 
     /**
-     * @param string $errorCode
-     */
-    public function setErrorCode($errorCode)
-    {
-        $this->errorCode = $errorCode;
-    }
-
-    /**
      * @return string
      */
     public function getErrorMessage()
     {
         return $this->errorMessage;
-    }
-
-    /**
-     * @param string $errorMessage
-     */
-    public function setErrorMessage($errorMessage)
-    {
-        $this->errorMessage = $errorMessage;
     }
 
     /**
@@ -123,27 +91,11 @@ class ValidationCheck
     }
 
     /**
-     * @param bool $success
-     */
-    public function setSuccess($success)
-    {
-        $this->success = $success;
-    }
-
-    /**
      * @return bool
      */
     public function getValidationStatus()
     {
         return $this->validationStatus;
-    }
-
-    /**
-     * @param bool $validationStatus
-     */
-    public function setValidationStatus($validationStatus)
-    {
-        $this->validationStatus = $validationStatus;
     }
 
     /**
@@ -155,27 +107,11 @@ class ValidationCheck
     }
 
     /**
-     * @param string $sessionId
-     */
-    public function setSessionId($sessionId)
-    {
-        $this->sessionId = $sessionId;
-    }
-
-    /**
      * @return string
      */
     public function getAppPlatform()
     {
         return $this->appPlatform;
-    }
-
-    /**
-     * @param string $appPlatform
-     */
-    public function setAppPlatform($appPlatform)
-    {
-        $this->appPlatform = $appPlatform;
     }
 
 }

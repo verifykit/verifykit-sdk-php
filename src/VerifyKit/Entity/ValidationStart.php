@@ -36,17 +36,17 @@ class ValidationStart
     {
         $response = json_decode($response, true);
         $meta = $response["meta"];
-        $this->setRequestId(isset($meta["requestId"]) ? $meta["requestId"] : null);
-        $this->setHttpStatusCode(isset($meta["httpStatusCode"]) ? $meta["httpStatusCode"] : null);
+        $this->requestId = (isset($meta["requestId"]) ? $meta["requestId"] : null);
+        $this->httpStatusCode = (isset($meta["httpStatusCode"]) ? $meta["httpStatusCode"] : null);
         if (isset($meta["errorMessage"]) && isset($meta["errorCode"])) {
-            $this->setErrorCode($meta["errorCode"]);
-            $this->setErrorMessage($meta["errorMessage"]);
+            $this->errorCode = $meta["errorCode"];
+            $this->errorMessage = $meta["errorMessage"];
         } elseif (isset($response["result"])) {
             $result = $response["result"];
-            $this->setSuccess(true);
-            $this->setDeeplink($result["deeplink"]);
-            $this->setReference($result["reference"]);
-            $this->setQrCode($result["qrCode"]);
+            $this->success = true;
+            $this->deeplink = $result["deeplink"];
+            $this->reference = $result["reference"];
+            $this->qrCode = $result["qrCode"];
         }
     }
 
@@ -58,13 +58,6 @@ class ValidationStart
         return $this->requestId;
     }
 
-    /**
-     * @param string $requestId
-     */
-    public function setRequestId($requestId)
-    {
-        $this->requestId = $requestId;
-    }
 
     /**
      * @return int
@@ -72,14 +65,6 @@ class ValidationStart
     public function getHttpStatusCode()
     {
         return $this->httpStatusCode;
-    }
-
-    /**
-     * @param int $httpStatusCode
-     */
-    public function setHttpStatusCode($httpStatusCode)
-    {
-        $this->httpStatusCode = $httpStatusCode;
     }
 
     /**
@@ -91,27 +76,11 @@ class ValidationStart
     }
 
     /**
-     * @param string $errorCode
-     */
-    public function setErrorCode($errorCode)
-    {
-        $this->errorCode = $errorCode;
-    }
-
-    /**
      * @return string
      */
     public function getErrorMessage()
     {
         return $this->errorMessage;
-    }
-
-    /**
-     * @param string $errorMessage
-     */
-    public function setErrorMessage($errorMessage)
-    {
-        $this->errorMessage = $errorMessage;
     }
 
     /**
@@ -123,27 +92,11 @@ class ValidationStart
     }
 
     /**
-     * @param bool $success
-     */
-    public function setSuccess($success)
-    {
-        $this->success = $success;
-    }
-
-    /**
      * @return string
      */
     public function getDeeplink()
     {
         return $this->deeplink;
-    }
-
-    /**
-     * @param string $deeplink
-     */
-    public function setDeeplink($deeplink)
-    {
-        $this->deeplink = $deeplink;
     }
 
     /**
@@ -155,27 +108,11 @@ class ValidationStart
     }
 
     /**
-     * @param string $reference
-     */
-    public function setReference($reference)
-    {
-        $this->reference = $reference;
-    }
-
-    /**
      * @return string
      */
     public function getQrCode()
     {
         return $this->qrCode;
-    }
-
-    /**
-     * @param string $qrCode
-     */
-    public function setQrCode($qrCode)
-    {
-        $this->qrCode = $qrCode;
     }
 
 }

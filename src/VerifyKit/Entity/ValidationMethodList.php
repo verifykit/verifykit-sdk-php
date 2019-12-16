@@ -40,16 +40,16 @@ class ValidationMethodList
     {
         $response = json_decode($response, true);
         $meta = $response["meta"];
-        $this->setRequestId(isset($meta["requestId"]) ? $meta["requestId"] : null);
-        $this->setHttpStatusCode(isset($meta["httpStatusCode"]) ? $meta["httpStatusCode"] : null);
+        $this->requestId = (isset($meta["requestId"]) ? $meta["requestId"] : null);
+        $this->httpStatusCode = (isset($meta["httpStatusCode"]) ? $meta["httpStatusCode"] : null);
         if (isset($meta["errorMessage"]) && isset($meta["errorCode"])) {
-            $this->setErrorCode($meta["errorCode"]);
-            $this->setErrorMessage($meta["errorMessage"]);
+            $this->errorCode = $meta["errorCode"];
+            $this->errorMessage = $meta["errorMessage"];
         } elseif (isset($response["result"])) {
             $result = $response["result"];
-            $this->setSuccess(true);
+            $this->success = true;
 
-            $this->setDescription($result["description"]);
+            $this->description = $result["description"];
 
             foreach ($result["list"] as $item) {
                 $validationMethod = new ValidationMethod();
@@ -83,27 +83,11 @@ class ValidationMethodList
     }
 
     /**
-     * @param string $requestId
-     */
-    public function setRequestId($requestId)
-    {
-        $this->requestId = $requestId;
-    }
-
-    /**
      * @return int
      */
     public function getHttpStatusCode()
     {
         return $this->httpStatusCode;
-    }
-
-    /**
-     * @param int $httpStatusCode
-     */
-    public function setHttpStatusCode($httpStatusCode)
-    {
-        $this->httpStatusCode = $httpStatusCode;
     }
 
     /**
@@ -114,13 +98,6 @@ class ValidationMethodList
         return $this->errorCode;
     }
 
-    /**
-     * @param string $errorCode
-     */
-    public function setErrorCode($errorCode)
-    {
-        $this->errorCode = $errorCode;
-    }
 
     /**
      * @return string
@@ -131,27 +108,11 @@ class ValidationMethodList
     }
 
     /**
-     * @param string $errorMessage
-     */
-    public function setErrorMessage($errorMessage)
-    {
-        $this->errorMessage = $errorMessage;
-    }
-
-    /**
      * @return bool
      */
     public function isSuccess()
     {
         return $this->success;
-    }
-
-    /**
-     * @param bool $success
-     */
-    public function setSuccess($success)
-    {
-        $this->success = $success;
     }
 
     /**
@@ -176,14 +137,6 @@ class ValidationMethodList
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
     }
 
     /**
