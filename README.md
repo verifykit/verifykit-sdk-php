@@ -22,7 +22,7 @@ composer require verifykit/verifykit-sdk-php
 Firstly, get a list of validation methods.
 
 ```php
-$vfk = new \VerifyKit\Web($serverKey);
+$vfk = new \VerifyKit\Web($serverKey, $clientIp);
 
 /** @var \VerifyKit\Entity\ValidationMethodList $validationMethodList */
 $validationMethodList = $vfk->getValidationMethodList();
@@ -42,7 +42,7 @@ foreach ($validationMethodList->getLocalizationList() as $localization){
 Then, start a validation 
 
 ```php
-$vfk = new \VerifyKit\Web($serverKey);
+$vfk = new \VerifyKit\Web($serverKey, $clientIp);
 
 $validationMethod = 'whatsapp'; // or telegram
 
@@ -62,7 +62,7 @@ echo $validationStart->getReference();
 Then, check that validation is complete.
 
 ```php
-$vfk = new \VerifyKit\Web($serverKey);
+$vfk = new \VerifyKit\Web($serverKey, $clientIp);
 
 $reference = "111111"; // reference from startValidation step.
 
