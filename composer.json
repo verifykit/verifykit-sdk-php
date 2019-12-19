@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "VerifyKit\\": "src/"
+      "VerifyKit\\": "src/VerifyKit"
     }
   }
 }
