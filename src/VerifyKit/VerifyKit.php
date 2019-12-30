@@ -112,7 +112,7 @@ class VerifyKit
             "X-Vfk-Forwarded-For: " . $this->clientIp
         ));
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-        if ($method == 'POST') {
+        if ($method == self::METHOD_POST) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($postFields));
         }
 
