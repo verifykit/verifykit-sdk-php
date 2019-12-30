@@ -93,18 +93,18 @@ if ($result->isSuccess()) {
 ```
 
 #### Web SDK
-If you want to use VerifyKit Web SDK, get an access token using by unique id. For other details, [click here](https://github.com/verifykit/verifykit-sdk-php/blob/master/WebSDK.md).
+If you want to use VerifyKit Web SDK, get an access token using unique id. For other details, [click here](https://github.com/verifykit/verifykit-sdk-php/blob/master/WebSDK.md).
 
 ```php
 $vfk = new \VerifyKit\VerifyKit($serverKey);
 
-/** @var \VerifyKit\Entity\Response $result */
-$result = $vfk->getResult($sessionId);
+/** @var \VerifyKit\Entity\AccessToken $result */
+$result = $vfk->getAccessToken($uniqueId);
 
 if ($result->isSuccess()) {
-    echo "Phone number : " . $result->getPhoneNumber() .
-        ", Validation Type : " . $result->getValidationType() .
-        ", Validation Date : " . $result->getValidationDate()->format('Y-m-d H:i:s') . PHP_EOL;
+    echo "Access Token : " . $result->getAccessToken() .
+        ", Unique Id : " . $result->getUniqueId() .
+        ", Timeout : " . $result->getTimeout()->format('Y-m-d H:i:s') . PHP_EOL;
 } else {
     echo "Error message : " . $result->getErrorMessage() . ", error code : " . $result->getErrorCode() . PHP_EOL;
 }
