@@ -21,9 +21,6 @@ class AccessToken
     private $timeout;
 
     /** @var string */
-    private $uniqueId;
-
-    /** @var string */
     private $errorCode;
 
     /** @var string */
@@ -50,7 +47,6 @@ class AccessToken
             $result = $response["result"];
             $this->success = true;
             $this->accessToken = isset($result["accessToken"]) ? $result["accessToken"] : null;
-            $this->uniqueId = isset($result["uniqueId"]) ? $result["uniqueId"] : null;
             $this->timeout = isset($result["timeout"]) ? new \DateTime($result["timeout"]) : null;
         }
     }
@@ -87,13 +83,6 @@ class AccessToken
         return $this->timeout;
     }
 
-    /**
-     * @return string
-     */
-    public function getUniqueId()
-    {
-        return $this->uniqueId;
-    }
 
     /**
      * @return string

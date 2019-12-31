@@ -7,7 +7,6 @@ use VerifyKit\Entity\Response;
 use VerifyKit\Exception\CurlException;
 use VerifyKit\Exception\ServerKeyEmptyException;
 use VerifyKit\Exception\SessionIdEmptyException;
-use VerifyKit\Exception\UniqueIdEmptyException;
 
 /**
  * Class VerifyKit
@@ -64,19 +63,13 @@ class VerifyKit
     }
 
     /**
-     * @param $uniqueId
      * @return AccessToken
      * @throws CurlException
-     * @throws UniqueIdEmptyException
      * @throws \Exception
      */
-    public function getWebAccessToken($uniqueId)
+    public function getWebAccessToken()
     {
-        if (null === $uniqueId || $uniqueId == "") {
-            throw new UniqueIdEmptyException("Unique id cannot be empty.", 835003);
-        }
-
-        $response = $this->makeRequest('/access-token', self::METHOD_POST, array("uniqueId" => $uniqueId));
+        $response = $this->makeRequest('/access-token', self::METHOD_GET);
 
         return new AccessToken($response);
     }
