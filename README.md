@@ -99,11 +99,10 @@ If you want to use VerifyKit Web SDK, get an access token using unique id. For o
 $vfk = new \VerifyKit\VerifyKit($serverKey);
 
 /** @var \VerifyKit\Entity\AccessToken $result */
-$result = $vfk->getAccessToken($uniqueId);
+$result = $vfk->getAccessToken();
 
 if ($result->isSuccess()) {
     echo "Access Token : " . $result->getAccessToken() .
-        ", Unique Id : " . $result->getUniqueId() .
         ", Timeout : " . $result->getTimeout()->format('Y-m-d H:i:s') . PHP_EOL;
 } else {
     echo "Error message : " . $result->getErrorMessage() . ", error code : " . $result->getErrorCode() . PHP_EOL;
