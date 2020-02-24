@@ -2,7 +2,7 @@ Web Sdk Implementation
 ---
 Web SDK works with an iframe structure that handles user authentication and returns session identification number on successful verification. Before using the web-sdk, customers should whitelist their site's domain by creating a web app and registering their domain as a **"trusted domain"** on [VerifyKit Dashboard](https://dashboard.verifykit.com)
  
-* Before each authentication, developers should get a unique and one-time authentication token in order to initialize sdk script. (For details of this procedure please visit [here.](https://github.com/verifykit/verifykit-sdk-php/blob/master/README.md))
+* Before each authentication, developers should get a unique and one-time authentication token in order to initialize sdk script. (For details of this procedure please visit [here.](https://github.com/verifykit/verifykit-sdk-php#web-sdk))
 
 
 After receiving the one-time token, javascript source and given div tag and should be inserted on the page where VerifyKit iframe is intended to appear. 
