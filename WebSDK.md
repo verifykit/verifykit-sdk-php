@@ -8,7 +8,7 @@ Web SDK works with an iframe structure that handles user authentication and retu
 After receiving the one-time token, javascript source and given div tag and should be inserted on the page where VerifyKit iframe is intended to appear. 
 ```
 <div id="verifykit_iframe"></div>
-<script type="text/javascript" src="https://widget.verifykit.com/script.js?token={token}"></script>
+<script type="text/javascript" src="https://widget.verifykit.com/v1.0/script.js?token={token}"></script>
 ```
 * After including the script with received token parameter, **"initVerifyKit()"** method can be assigned to any login mechanism website owner prefers.
 * When user successfully authenticates with VerifyKit, a MessageEvent will be triggered from the sdk, acknowledging the parent page of the successful verification and returning the obtained session identification number which can be used to fetch client detail.
