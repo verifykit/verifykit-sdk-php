@@ -92,6 +92,25 @@ if ($result->isSuccess()) {
 }
 ```
 
+
+#### WhatsApp Session Message
+
+If you want to send messages to your verified users within 24 hours with WhatsApp Session Message, you can use this way.
+ 
+```php
+$waMessage = new \VerifyKit\WASessionMessage($serverKey);
+
+
+/** @var \VerifyKit\Entity\WAMessageResponse $result */
+$result = $waMessage->sendMessage($phoneNumber, $textMessage); // Phone number that you received using the session id in the previous method.
+
+if ($result->isSuccess()) {
+    echo "Phone number : " . $result->getPhoneNumber() . ", Message : " . $result->getMessage() . ", Status : " . $result->getStatus() . PHP_EOL;
+} else {
+    echo "Error message : " . $result->getErrorMessage() . ", error code : " . $result->getErrorCode() . PHP_EOL;
+}
+```
+
 #### Web SDK
 If you want to use VerifyKit Web SDK, get an access token using unique id. For other details, [click here](https://github.com/verifykit/verifykit-sdk-php/blob/master/WebSDK.md).
 
