@@ -94,8 +94,8 @@ Three parameters are returned in the response. The first one is the "reference" 
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/start' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'app=whatsapp'
+--header 'Content-Type: application/json' \
+-d '{"app":"whatsapp"}'
 ```
 
 ##### Example response body
@@ -127,8 +127,8 @@ If your user has completed the validation, you will receive a "session id" of th
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/check' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'reference=REFERENCE-OF-VALIDATION'
+--header 'Content-Type: application/json' \
+-d '{"reference":"REFERENCE-OF-VALIDATION"}'
 ```
 
 ##### Example response body
@@ -153,6 +153,7 @@ Firstly, prepare a screen where your user will enter their phone number and coun
 ##### Example curl request
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/country' \
+--header 'Content-Type: application/json' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' 
 ```
 
@@ -189,10 +190,8 @@ Then, you must post the country code  and the phone number that your user entere
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/send-otp' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'phoneNumber=PHONE_NUMBER' \
---data-urlencode 'countryCode=COUNTRY_CODE'
-
+--header 'Content-Type: application/json' \
+-d '{"phoneNumber":"PHONE_NUMBER","countryCode":"COUNTRY_CODE"}'
 ```
 
 ##### Example response body
@@ -222,11 +221,8 @@ If your user has completed the validation, you will receive a "session id" of th
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-otp' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'phoneNumber=PHONE_NUMBER' \
---data-urlencode 'countryCode=COUNTRY_CODE' \
---data-urlencode 'reference=REFERENCE-OF-VALIDATION' \
---data-urlencode 'code=USER-ENTERED-CODE'
+--header 'Content-Type: application/json' \
+-d '{"phoneNumber":"PHONE_NUMBER","countryCode":"COUNTRY_CODE","reference":"REFERENCE-OF-VALIDATION","code":"USER-ENTERED-CODE"}'
 ```
 
 ##### Example response body
@@ -254,8 +250,8 @@ This is where you will get your user's credentials such as phone number et ceter
 ```bash
 curl  --request POST 'https://api.verifykit.com/v1.0/result' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'sessionId=SESSION-ID-OF-VALIDATION'
+--header 'Content-Type: application/json' \
+-d '{"sessionId":"SESSION-ID-OF-VALIDATION"}'
 ```
 
 
