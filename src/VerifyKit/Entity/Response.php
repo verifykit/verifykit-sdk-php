@@ -21,6 +21,9 @@ class Response
     private $validationDate;
 
     /** @var string */
+    private $countryCode;
+
+    /** @var string */
     private $phoneNumber;
 
     /** @var string */
@@ -52,6 +55,7 @@ class Response
             $this->phoneNumber = isset($result["phoneNumber"]) ? $result["phoneNumber"] : null;
             $this->validationType = isset($result["validationType"]) ? $result["validationType"] : null;
             $this->validationDate = isset($result["validationDate"]) ? new \DateTime($result["validationDate"]) : null;
+            $this->countryCode = isset($result["countryCode"]) ? $result["countryCode"] : null;
         }
     }
 
@@ -85,6 +89,14 @@ class Response
     public function getValidationDate()
     {
         return $this->validationDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
     }
 
     /**
