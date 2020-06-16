@@ -1,13 +1,13 @@
 EmailSDK Implementation
 ---
 ### Start email validation.
-Using this endpoint, you can start the email verification process. In the response, you can get the reference and subject values of the verification for further status control purposes which will be explained later in this document. Example request and response values are given below.
+Using this endpoint, you can start the email verification process. You need to send the email address of the user you want to verify as the required "email" parameter. In the response, you can get the reference and subject values of the verification for further status control purposes which will be explained later in this document. Example request and response values are given below.
 ##### Example curl request
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/start-email' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
 --header 'Content-Type: application/json' \
--d '{"app":"email"}'
+-d '{"email":"YOUR-CLIENT'S-EMAIL-ADDRESS"}'
 ```
 ##### Example response body
 ```json
@@ -51,5 +51,17 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-email' \
         "validationType" : "VALIDATION-TYPE",
         "validationDate" : "VALIDATION-DATE",
     }
+}
+```
+##### Also after we receive the user mail from your side, we forward the user verification details to the callback url you provide. Example data structure for a response you will receive on your callback url is given below.
+##### Example response body
+```json
+{
+    "emailVerify" : "boolean",
+    "dkimVerify" : "boolean",
+    "spfVerify" : "boolean",
+    "email" : "VALIDATION-EMAIL-ADDRESS",
+    "validationType" : "VALIDATION-TYPE",
+    "validationDate" : "VALIDATION-DATE",
 }
 ```
