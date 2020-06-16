@@ -44,12 +44,12 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-email' \
         "httpStatusCode": 200
     },
     "result": {
-        "emailVerify" : boolean,
-        "dkimVerify" : boolean,
-        "spfVerify": boolean,
-        "email" : 'VALIDATION-EMAIL-ADDRESS',
-        "validationType" : 'VALIDATION-TYPE',
-        "validationDate" : 'VALIDATION-DATE',
+        "emailVerify" : "boolean",
+        "dkimVerify" : "boolean",
+        "spfVerify": "boolean",
+        "email" : "VALIDATION-EMAIL-ADDRESS",
+        "validationType" : "VALIDATION-TYPE",
+        "validationDate" : "VALIDATION-DATE",
     }
 }
 ```
