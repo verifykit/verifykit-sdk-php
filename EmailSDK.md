@@ -1,8 +1,13 @@
 EmailSDK Implementation
 ---
 ### Start email validation.
-Using this endpoint, you can start the email verification process. You need to send the email address of the user you want to verify as the required "email" parameter. In the response, you can get the reference and subject values of the verification for further status control purposes which will be explained later in this document. Example request and response values are given below.
+Using this endpoint, you can start the email verification process. You can send the email address of the user you want to verify as the optional "email" parameter for an additional security measure. This optional parameter brings another variation to the /start-email request as additional content header is required to be sent alongside with the post parameter. In the response, you can get the reference and subject values of the verification for further status control purposes which will be explained later in this document. Example request and response values are given below.
 ##### Example curl request
+```bash
+curl  --request POST 'https://web-rest.verifykit.com/v1.0/start-email' \
+--header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+```
+##### Example curl request with optional "email" parameter
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/start-email' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
@@ -53,7 +58,7 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-email' \
     }
 }
 ```
-##### Also after we receive the user mail from your side, we forward the user verification details to the callback url you provide. Example data structure for a response you will receive on your callback url is given below.
+##### Also after we receive the user mail from your side, we forward the user verification details to the callback url you provide. Example data structure for the response you will receive on your callback url is given below. "reference" value of the response is the same value as both the "reference" value you receive in the response data of /start-email request and the "reference" parameter you use to send /check-email request. "reference" is the unique identification parameter for each verification which helps you match the user data we send with the ongoing verification on your side.
 ##### Example response body
 ```json
 {
@@ -63,5 +68,7 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-email' \
     "email" : "VALIDATION-EMAIL-ADDRESS",
     "validationType" : "VALIDATION-TYPE",
     "validationDate" : "VALIDATION-DATE",
+    "reference" : "REFERENCE-FOR-VERIFICATION",
+    "sessionId" : "SESSION-ID-OF-SUCESSFUL-VERIFICATION"
 }
 ```
