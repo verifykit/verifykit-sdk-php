@@ -2,6 +2,7 @@
 
 namespace VerifyKit;
 
+use VerifyKit\Entity\EmailValidationStart;
 use VerifyKit\Entity\ValidationCheck;
 use VerifyKit\Entity\ValidationMethodList;
 use VerifyKit\Entity\ValidationStart;
@@ -74,6 +75,23 @@ class Web
         $response = $this->makeRequest('/start', self::METHOD_POST, array("app" => $validationMethod));
 
         return new ValidationStart($response);
+    }
+
+    /**
+     * @param null $email
+     * @return EmailValidationStart
+     * @throws CurlException
+     */
+    public function startEmailValidation($email = null)
+    {
+        $postFields = array();
+        if (null !== $email) {
+            $postFields = array("email" => $email);
+        }
+
+        $response = $this->makeRequest('/start-email', self::METHOD_POST, $postFields);
+
+        return new EmailValidationStart($response);
     }
 
     /**
