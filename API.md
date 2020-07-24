@@ -271,3 +271,41 @@ curl  --request POST 'https://api.verifykit.com/v1.0/result' \
     }
 }
 ````
+
+## Error Codes
+
+If there are any errors, the response scheme you get will be as follows.
+
+```json
+{
+    "meta": {
+        "requestId": "REQUEST-ID",
+        "httpStatusCode": "HTTP_STATUS_CODE",
+        "errorMessage": "ERROR_MESSAGE",
+        "errorCode": "ERROR_CODE"
+    }
+}
+```
+
+The list of error messages is as follows
+
+|  HTTP Status Code 	|  Error Code 	|   Description	                                                        |
+|---	                |---	        |---	                                                                |
+| 400                   | 400007        | Invalid phone number, please check the phone number.                  |
+| 403 	                | 403004	    | Request parameter value error. Please check body parameters.          |
+| 403 	                | 403011	    | Validation type is not active.                                        |
+| 403                   | 403012        | Phone number is banned.                                               |
+| 403                   | 403013        | No waiting OTP validation.                                            |   
+| 403                   | 403014        | OTP code is invalid.                                                  |
+| 403                   | 403015        | You have reached maximum limit of sending OTP code.                   |
+| 403                   | 403036        | Validation not found.                                                 |
+| 403                   | 403037        | Validation has expired.                                               |
+| 403  	                | 403038        | Unidentified application. Please check your credential parameters.    |
+| 403 	                | 403041	    | You have reached maximum limit of package validation count.           |
+| 403                   | 403042        | Please check your account balance on VerifyKit Dashboard.             |
+| 403 	                | 403043	    | Please check your account balance on VerifyKit Dashboard.             |
+| 403 	                | 403048	    | Email is invalid.                                                     |
+| 403                   | 403047        | OTP setting is not active.                                            |
+| 403                   | 403049        | OTP can only be used with test numbers.                               |
+| 429 	                | 429001	    | You've reached the maximum verification limit.                        |
+| 500	                | 500008 	    | Internal server error.                                                |
