@@ -3,10 +3,15 @@
 namespace VerifyKit;
 
 use VerifyKit\Entity\EmailValidationStart;
+use VerifyKit\Entity\OTPCheck;
+use VerifyKit\Entity\OTPSend;
 use VerifyKit\Entity\ValidationCheck;
 use VerifyKit\Entity\ValidationMethodList;
 use VerifyKit\Entity\ValidationStart;
+use VerifyKit\Exception\CountryCodeEmptyException;
 use VerifyKit\Exception\CurlException;
+use VerifyKit\Exception\OTPCodeEmptyException;
+use VerifyKit\Exception\PhoneNumberEmptyException;
 use VerifyKit\Exception\ReferenceEmptyException;
 use VerifyKit\Exception\ServerKeyEmptyException;
 use VerifyKit\Exception\ValidationMethodEmptyException;
@@ -77,6 +82,32 @@ class Web
         return new ValidationStart($response);
     }
 
+
+    /**
+     * @param $phoneNumber
+     * @param $countryCode
+     * @return OTPSend
+     * @throws CountryCodeEmptyException
+     * @throws CurlException
+     * @throws PhoneNumberEmptyException
+     */
+    public function sendOTP($phoneNumber, $countryCode)
+    {
+        if (null === $phoneNumber || $phoneNumber == "") {
+            throw new PhoneNumberEmptyException("Phone number cannot be empty.", 836004);
+        }
+
+        if (null === $countryCode || $countryCode == "") {
+            throw new CountryCodeEmptyException("Country code cannot be empty.", 836005);
+        }
+
+        $response = $this->makeRequest('/send-otp', self::METHOD_POST,
+            array("phoneNumber" => $phoneNumber, "countryCode" => $countryCode)
+        );
+
+        return new OTPSend($response);
+    }
+
     /**
      * @param null $email
      * @return EmailValidationStart
@@ -109,6 +140,44 @@ class Web
         $response = $this->makeRequest('/check', self::METHOD_POST, array('reference' => $reference));
 
         return new ValidationCheck($response);
+    }
+
+
+    /**
+     * @param $phoneNumber
+     * @param $countryCode
+     * @param $reference
+     * @param $code
+     * @return OTPCheck
+     * @throws CountryCodeEmptyException
+     * @throws CurlException
+     * @throws OTPCodeEmptyException
+     * @throws PhoneNumberEmptyException
+     * @throws ReferenceEmptyException
+     */
+    public function checkOTP($phoneNumber, $countryCode, $reference, $code)
+    {
+        if (null === $phoneNumber || $phoneNumber == "") {
+            throw new PhoneNumberEmptyException("Phone number cannot be empty.", 836004);
+        }
+
+        if (null === $countryCode || $countryCode == "") {
+            throw new CountryCodeEmptyException("Country code cannot be empty.", 836005);
+        }
+
+        if (null === $reference || $reference == "") {
+            throw new ReferenceEmptyException("Reference cannot be empty.", 836006);
+        }
+
+        if (null === $code || $code == "") {
+            throw new OTPCodeEmptyException("OTP Code cannot be empty.", 836007);
+        }
+
+        $response = $this->makeRequest('/check-otp', self::METHOD_POST,
+            array("phoneNumber" => $phoneNumber, "countryCode" => $countryCode, "reference" => $reference, "code" => $code)
+        );
+
+        return new OTPCheck($response);
     }
 
     /**
