@@ -86,12 +86,14 @@ class Web
     /**
      * @param $phoneNumber
      * @param $countryCode
+     * @param int $mcc Mobile Country Code
+     * @param int $mnc Mobile Network Code
      * @return OTPSend
      * @throws CountryCodeEmptyException
      * @throws CurlException
      * @throws PhoneNumberEmptyException
      */
-    public function sendOTP($phoneNumber, $countryCode)
+    public function sendOTP($phoneNumber, $countryCode, $mcc = 999, $mnc = 999)
     {
         if (null === $phoneNumber || $phoneNumber == "") {
             throw new PhoneNumberEmptyException("Phone number cannot be empty.", 836004);
@@ -102,7 +104,7 @@ class Web
         }
 
         $response = $this->makeRequest('/send-otp', self::METHOD_POST,
-            array("phoneNumber" => $phoneNumber, "countryCode" => $countryCode)
+            array("phoneNumber" => $phoneNumber, "countryCode" => $countryCode, "mcc" => $mcc, "mnc" => $mnc)
         );
 
         return new OTPSend($response);
