@@ -1,6 +1,11 @@
 API Implementation
 ---
 
+
+### IMPORTANT NOTE
+
+For the security of your application, you should send the IP address of the end user in all requests. To do this, you need to add X-Vfk-Forwarded-For header parameter in all requests.
+
 ### Get a list of validation methods.
 
 There are verification methods and language variables that you can use while preparing your verification screens. Response also includes specific warning messages in cases of errors for developers to act upon.
@@ -11,6 +16,7 @@ There are verification methods and language variables that you can use while pre
 ```bash
 curl --request GET 'https://web-rest.verifykit.com/v1.0/init' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json'
 ```
 
@@ -94,6 +100,7 @@ Three parameters are returned in the response. The first one is the "reference" 
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/start' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"app":"whatsapp"}'
 ```
@@ -127,6 +134,7 @@ If your user has completed the validation, you will receive a "session id" of th
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/check' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"reference":"REFERENCE-OF-VALIDATION"}'
 ```
@@ -154,6 +162,7 @@ Firstly, prepare a screen where your user will enter their phone number and coun
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/country' \
 --header 'Content-Type: application/json' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' 
 ```
 
@@ -190,6 +199,7 @@ Then, you must post the country code  and the phone number that your user entere
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/send-otp' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"phoneNumber":"PHONE_NUMBER","countryCode":"COUNTRY_CODE"}'
 ```
@@ -221,6 +231,7 @@ If your user has completed the validation, you will receive a "session id" of th
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-otp' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"phoneNumber":"PHONE_NUMBER","countryCode":"COUNTRY_CODE","reference":"REFERENCE-OF-VALIDATION","code":"USER-ENTERED-CODE"}'
 ```
@@ -250,6 +261,7 @@ This is where you will get your user's credentials such as phone number et ceter
 ```bash
 curl  --request POST 'https://api.verifykit.com/v1.0/result' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"sessionId":"SESSION-ID-OF-VALIDATION"}'
 ```
