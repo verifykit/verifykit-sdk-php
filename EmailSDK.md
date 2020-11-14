@@ -1,16 +1,23 @@
 EmailSDK Implementation
 ---
+
+### IMPORTANT NOTE
+
+For the security of your application, you should send the IP address of the end user in all requests. To do this, you need to add X-Vfk-Forwarded-For header parameter in all requests.
+
 ### Start email validation.
 Using this endpoint, you can start the email verification process. You can send the email address of the user you want to verify as the optional "email" parameter for an additional security measure. This optional parameter brings another variation to the /start-email request as additional content header is required to be sent alongside with the post parameter. In the response, you can get the reference and subject values of the verification for further status control purposes which will be explained later in this document. Example request and response values are given below.
 ##### Example curl request
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/start-email' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 ```
 ##### Example curl request with optional "email" parameter
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/start-email' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"email":"YOUR-CLIENT'S-EMAIL-ADDRESS"}'
 ```
@@ -38,6 +45,7 @@ If the verification is not completed yet, the response status code will be HTTP 
 ```bash
 curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-email' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' \
+--header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"reference":"REFERENCE-OF-VALIDATION", "code" : "SUBJECT VALUE OF START-EMAIL-REQUEST"}'
 ```

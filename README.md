@@ -78,7 +78,7 @@ if ($validationCheck->getValidationStatus()) {
 Finally, get result by session id.
 
 ```php
-$vfk = new \VerifyKit\VerifyKit($serverKey);
+$vfk = new \VerifyKit\VerifyKit($serverKey, $clientIp);
 
 /** @var \VerifyKit\Entity\Response $result */
 $result = $vfk->getResult($sessionId);
@@ -98,7 +98,7 @@ if ($result->isSuccess()) {
 If you want to send messages to your verified users within 24 hours with WhatsApp Session Message, you can use this way.
  
 ```php
-$waMessage = new \VerifyKit\WASessionMessage($serverKey);
+$waMessage = new \VerifyKit\WASessionMessage($serverKey, $clientIp);
 
 
 /** @var \VerifyKit\Entity\WAMessageResponse $result */
@@ -115,7 +115,7 @@ if ($result->isSuccess()) {
 If you want to use VerifyKit Web SDK, get an access token using unique id. For other details, [click here](https://github.com/verifykit/verifykit-sdk-php/blob/master/WebSDK.md).
 
 ```php
-$vfk = new \VerifyKit\VerifyKit($serverKey);
+$vfk = new \VerifyKit\VerifyKit($serverKey, $clientIp);
 
 /** @var \VerifyKit\Entity\AccessToken $result */
 $result = $vfk->getWebAccessToken();
