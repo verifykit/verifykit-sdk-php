@@ -2,6 +2,7 @@
 
 namespace VerifyKit;
 
+use VerifyKit\Entity\Countries;
 use VerifyKit\Entity\EmailValidationStart;
 use VerifyKit\Entity\OTPCheck;
 use VerifyKit\Entity\OTPSend;
@@ -67,33 +68,71 @@ class Web
 
     /**
      * @param $validationMethod
+     * @param string $lang
+     * @param bool $deeplink
+     * @param bool $qrCode
      * @return ValidationStart
      * @throws CurlException
      * @throws ValidationMethodEmptyException
      */
-    public function startValidation($validationMethod)
+    public function startValidation($validationMethod, $lang = 'en', $deeplink = true, $qrCode = false)
     {
         if (null === $validationMethod || $validationMethod == "") {
             throw new ValidationMethodEmptyException("Validation method cannot be empty.", 836002);
         }
 
-        $response = $this->makeRequest('/start', self::METHOD_POST, array("app" => $validationMethod));
+        if (null === $lang) {
+            $lang = 'en';
+        }
+
+        if (null === $deeplink) {
+            $deeplink = true;
+        }
+
+        if (null === $qrCode) {
+            $qrCode = true;
+        }
+
+        if (($deeplink && $qrCode) || (false === $deeplink && false === $qrCode)) {
+            $deeplink = true;
+            $qrCode = false;
+        }
+
+        $response = $this->makeRequest('/start', self::METHOD_POST,
+            array("app" => $validationMethod, "lang" => $lang, "deeplink" => $deeplink, "qrCode" => $qrCode)
+        );
 
         return new ValidationStart($response);
     }
 
 
     /**
+     * @param string $countryCode
+     * @param string $lang
+     * @return Countries
+     * @throws CurlException
+     */
+    public function getCountryList($countryCode = 'TR', $lang = 'en')
+    {
+        $response = $this->makeRequest('/country', self::METHOD_POST,
+            array("lang" => $lang, "countryCode" => $countryCode)
+        );
+
+        return new Countries($response);
+    }
+
+    /**
      * @param $phoneNumber
      * @param $countryCode
-     * @param int $mcc Mobile Country Code
-     * @param int $mnc Mobile Network Code
+     * @param int $mcc
+     * @param int $mnc
+     * @param string $lang
      * @return OTPSend
      * @throws CountryCodeEmptyException
      * @throws CurlException
      * @throws PhoneNumberEmptyException
      */
-    public function sendOTP($phoneNumber, $countryCode, $mcc = 999, $mnc = 999)
+    public function sendOTP($phoneNumber, $countryCode, $mcc = 999, $mnc = 999, $lang = 'en')
     {
         if (null === $phoneNumber || $phoneNumber == "") {
             throw new PhoneNumberEmptyException("Phone number cannot be empty.", 836004);
@@ -103,8 +142,12 @@ class Web
             throw new CountryCodeEmptyException("Country code cannot be empty.", 836005);
         }
 
+        if (null === $lang || $lang == '') {
+            $lang = 'en';
+        }
+
         $response = $this->makeRequest('/send-otp', self::METHOD_POST,
-            array("phoneNumber" => $phoneNumber, "countryCode" => $countryCode, "mcc" => $mcc, "mnc" => $mnc)
+            array("phoneNumber" => $phoneNumber, "countryCode" => $countryCode, "mcc" => $mcc, "mnc" => $mnc, "lang" => $lang)
         );
 
         return new OTPSend($response);
