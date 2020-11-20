@@ -152,7 +152,7 @@ $reference = "111111"; // reference from sendOtp step. Required.
 $code = "123456"; // The code to be entered by the user receiving the OTP.
 
 /** @var \VerifyKit\Entity\OtpCheck $validation */
-$otpCheck = $vfk->checkValidation($reference);
+$otpCheck = $vfk->checkOtp($phoneNumber, $countryCode, $reference, $code);
 if ($otpCheck->getValidationStatus()) {
     $sessionId = $otpCheck->getSessionId(); // session id for the OTP validation result
 }
