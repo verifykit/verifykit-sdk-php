@@ -2,6 +2,8 @@
 
 namespace VerifyKit;
 
+use VerifyKit\Entity\BlacklistAdd;
+use VerifyKit\Entity\BlacklistRemove;
 use VerifyKit\Entity\EmailValidationStart;
 use VerifyKit\Entity\OTPCheck;
 use VerifyKit\Entity\OTPSend;
@@ -22,7 +24,7 @@ use VerifyKit\Exception\ValidationMethodEmptyException;
  */
 class Web
 {
-    const URL = 'https://web-rest.verifykit.com/v1.0';
+    const URL = 'https://local-rest.verifykit.com:38443/v1.0';
 
     const METHOD_POST = 'POST';
     const METHOD_GET = 'GET';
@@ -180,6 +182,36 @@ class Web
         );
 
         return new OTPCheck($response);
+    }
+
+    /**
+     * @param $validationType
+     * @param $phoneNumberList
+     * @return BlacklistAdd
+     * @throws CurlException
+     */
+    public function addPhoneNumbersToBlacklist($validationType, $phoneNumberList)
+    {
+        $response = $this->makeRequest('/blacklist/add', self::METHOD_POST,
+            array("type" => $validationType, "msisdn" => $phoneNumberList)
+        );
+
+        return new BlacklistAdd($response);
+    }
+
+    /**
+     * @param $validationType
+     * @param $phoneNumberList
+     * @return BlacklistRemove
+     * @throws CurlException
+     */
+    public function removePhoneNumbersFromBlacklist($validationType, $phoneNumberList)
+    {
+        $response = $this->makeRequest('/blacklist/remove', self::METHOD_POST,
+            array("type" => $validationType, "msisdn" => $phoneNumberList)
+        );
+
+        return new BlacklistRemove($response);
     }
 
     /**
