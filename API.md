@@ -106,14 +106,14 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/start' \
 ```
 
 
-Other parameters you can use when sending this request:
+Other parameters you can send at this request:
 ```bash
 -d '{"lang":"en"}' # Language of end user. Default value is 'en' (English). This parameter is not required.
 
-# We can give both deeplink and qrCode in response to the start request. If you sent qrCode parameter as (bool)true, you can see that you have received a base64 qrCode. By showing this qrCode to users coming from desktop browsers, you can make it easier to verify.
-# We recommend that you do not send qrCode parameter as (bool)true for requests from mobile applications or mobile browsers. You should use deeplink for this platforms.
+# We can give both deeplink and qrCode in response to the start request. If you send qrCode parameter as (bool)true, you can see that you have received a base64 qrCode. By showing this qrCode to users coming from desktop browsers, you can make it easier to verify.
+# We recommend that you do not send qrCode parameter as (bool)true for requests from mobile applications or mobile browsers. You should use deeplink for these platforms.
 # This two parameters cannot be (bool)true at the same time. If you send both (bool)true at the same time, we will only give the deeplink in the response.
-# Default value is true for deeplink, and false for qrCode. This parameters are not required.
+# Default value is true for deeplink, and false for qrCode. These parameters are not required.
 -d '{"deeplink":true}'
 -d '{"qrCode":false}' 
 ```
@@ -179,7 +179,7 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/country' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' 
 ```
 
-Other parameters you can use when sending this request:
+Other parameters you can send at this request:
 ```bash
 -d '{"countryCode":"TR"}' country code parameter for the request. We return the sent countryCode parameter at the top of the list in the response. If you want a specific country (user's country detected by ip on your side for example) to be the first response parameter, you can send countryCode with your request. Not required.
 ```
@@ -222,7 +222,7 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/send-otp' \
 -d '{"phoneNumber":"PHONE_NUMBER","countryCode":"COUNTRY_CODE"}'
 ```
 
-Other parameters you can use when sending this request:
+Other parameters you can send at this request:
 ```bash
 #  For OTP verification to work best, you should send us the MCC and MNC code of the sim card in the user's device.
 -d '{"mcc":"999"}' # Mobile Country Code (MCC) of the sim card in the user's device. Default value is '999'. Not required.

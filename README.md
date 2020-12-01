@@ -56,10 +56,10 @@ $validationMethod = 'whatsapp'; // or telegram. Required.
 
 $lang = 'en'; // Language of end user. Default value is 'en' (English). This parameter is not required.   
 
-// We can give both deeplink and qrCode in response to the start request. If you sent qrCode parameter as (bool)true, you can see that you have received a base64 qrCode. By showing this qrCode to users coming from desktop browsers, you can make it easier to verify.
-// We recommend that you do not send qrCode parameter as (bool)true for requests from mobile applications or mobile browsers. You should use deeplink for this platforms.
+// We can give both deeplink and qrCode in response to the start request. If you send qrCode parameter as (bool)true, you can see that you have received a base64 qrCode. By showing this qrCode to users coming from desktop browsers, you can make it easier to verify.
+// We recommend that you do not send qrCode parameter as (bool)true for requests from mobile applications or mobile browsers. You should use deeplink for these platforms.
 // This two parameters cannot be (bool)true at the same time. If you send both (bool)true at the same time, we will only give the deeplink in the response.
-// Default value is true for deeplink, and false for qrCode. This parameters are not required.
+// Default value is true for deeplink, and false for qrCode. These parameters are not required.
 $deeplink = true;
 $qrCode = false;
 
@@ -95,7 +95,7 @@ if ($validationCheck->getValidationStatus()) {
 
 ##### Country List
 
-We recommend that users choose their country before typing their numbers in order to avoid confusion about the country code. For this reason, it may be helpful to get the country list before OTP verifications.
+We recommend that users should choose their country before typing their numbers in order to avoid confusion about the country code. For this reason, it may be helpful to get the country list before OTP verifications.
 
 ```php
 $vfk = new \VerifyKit\Web($serverKey, $clientIp);
