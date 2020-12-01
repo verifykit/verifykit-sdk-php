@@ -8,15 +8,18 @@ use VerifyKit\Entity\EmailValidationStart;
 use VerifyKit\Entity\OTPCheck;
 use VerifyKit\Entity\OTPSend;
 use VerifyKit\Entity\ValidationCheck;
+use VerifyKit\Entity\ValidationMethod;
 use VerifyKit\Entity\ValidationMethodList;
 use VerifyKit\Entity\ValidationStart;
 use VerifyKit\Exception\CountryCodeEmptyException;
 use VerifyKit\Exception\CurlException;
 use VerifyKit\Exception\OTPCodeEmptyException;
 use VerifyKit\Exception\PhoneNumberEmptyException;
+use VerifyKit\Exception\PhoneNumberListEmptyException;
 use VerifyKit\Exception\ReferenceEmptyException;
 use VerifyKit\Exception\ServerKeyEmptyException;
 use VerifyKit\Exception\ValidationMethodEmptyException;
+use VerifyKit\Exception\ValidationMethodNotValidException;
 
 /**
  * Class VerifyKit
@@ -185,30 +188,60 @@ class Web
     }
 
     /**
-     * @param $validationType
-     * @param $phoneNumberList
+     * @param $validationMethod
+     * @param array $phoneNumberList
      * @return BlacklistAdd
      * @throws CurlException
+     * @throws PhoneNumberListEmptyException
+     * @throws ValidationMethodEmptyException
+     * @throws ValidationMethodNotValidException
      */
-    public function addPhoneNumbersToBlacklist($validationType, $phoneNumberList)
+    public function addPhoneNumbersToBlacklist($validationMethod, array $phoneNumberList = array())
     {
+        if (null === $validationMethod || $validationMethod == "") {
+            throw new ValidationMethodEmptyException("Validation method cannot be empty.", 836008);
+        }
+
+        if (false === in_array($validationMethod, Constant\ValidationMethod::getValidationMethods())) {
+            throw new ValidationMethodNotValidException("Validation method is not valid.", 836012);
+        }
+
+        if (empty($phoneNumberList)) {
+            throw new PhoneNumberListEmptyException("Validation method cannot be empty.", 836010);
+        }
+
         $response = $this->makeRequest('/blacklist/add', self::METHOD_POST,
-            array("type" => $validationType, "msisdn" => $phoneNumberList)
+            array("type" => $validationMethod, "msisdn" => $phoneNumberList)
         );
 
         return new BlacklistAdd($response);
     }
 
     /**
-     * @param $validationType
-     * @param $phoneNumberList
+     * @param $validationMethod
+     * @param array $phoneNumberList
      * @return BlacklistRemove
      * @throws CurlException
+     * @throws PhoneNumberListEmptyException
+     * @throws ValidationMethodEmptyException
+     * @throws ValidationMethodNotValidException
      */
-    public function removePhoneNumbersFromBlacklist($validationType, $phoneNumberList)
+    public function removePhoneNumbersFromBlacklist($validationMethod, array $phoneNumberList = array())
     {
+        if (null === $validationMethod || $validationMethod == "") {
+            throw new ValidationMethodEmptyException("Validation method cannot be empty.", 836009);
+        }
+
+        if (false === in_array($validationMethod, Constant\ValidationMethod::getValidationMethods())) {
+            throw new ValidationMethodNotValidException("Validation method is not valid.", 836013);
+        }
+
+        if (empty($phoneNumberList)) {
+            throw new PhoneNumberListEmptyException("Validation method cannot be empty.", 836011);
+        }
+
         $response = $this->makeRequest('/blacklist/remove', self::METHOD_POST,
-            array("type" => $validationType, "msisdn" => $phoneNumberList)
+            array("type" => $validationMethod, "msisdn" => $phoneNumberList)
         );
 
         return new BlacklistRemove($response);
