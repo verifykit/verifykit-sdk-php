@@ -9,7 +9,6 @@ use VerifyKit\Entity\EmailValidationStart;
 use VerifyKit\Entity\OTPCheck;
 use VerifyKit\Entity\OTPSend;
 use VerifyKit\Entity\ValidationCheck;
-use VerifyKit\Entity\ValidationMethod;
 use VerifyKit\Entity\ValidationMethodList;
 use VerifyKit\Entity\ValidationStart;
 use VerifyKit\Exception\CountryCodeEmptyException;
