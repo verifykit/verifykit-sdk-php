@@ -6,7 +6,7 @@ API Implementation
 
 For the security of your application, you should send the IP address of the end user in all requests. To do this, you need to add X-Vfk-Forwarded-For header parameter in all requests.
 
-### Get a list of validation methods.
+#### Validation Method List
 
 There are verification methods and language variables that you can use while preparing your verification screens. Response also includes specific warning messages in cases of errors for developers to act upon.
 
@@ -78,7 +78,7 @@ curl --request GET 'https://web-rest.verifykit.com/v1.0/init' \
 
 ```
 
-If your view selection in your application settings is to show the SMS option with other validation methods, the method of validation by SMS comes in the list parameter as in the code snippet above. However, if you want to show your users this option as an alternative, the parameters of the SMS validation method options will be as follows.
+If your SMS view selection setting is set to 'alternative' in your application detail screen on VerifyKit dashboard, SMS validation method parameters will be given in the list parameter as in the code snippet above. However, if your sms view selection setting is set to 'recommended' option, SMS validation method parameters will be as follows.
 
 ```json
 {
@@ -89,7 +89,7 @@ If your view selection in your application settings is to show the SMS option wi
 
 
 
-### Start a validation.
+#### Start Validation (WhatsApp or Telegram)
 
 When your users choose a validation method from the screen you prepare, you can start the validation process by sending the "app" parameter of selected validation method to this endpoint.
 ​
@@ -103,6 +103,19 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/start' \
 --header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'Content-Type: application/json' \
 -d '{"app":"whatsapp"}'
+```
+
+
+Other parameters you can send at this request:
+```bash
+-d '{"lang":"en"}' # Language of end user. Default value is 'en' (English). This parameter is not required.
+
+# We can give both deeplink and qrCode in response to the start request. If you send qrCode parameter as (bool)true, you can see that you have received a base64 qrCode. By showing this qrCode to users coming from desktop browsers, you can make it easier to verify.
+# We recommend that you do not send qrCode parameter as (bool)true for requests from mobile applications or mobile browsers. You should use deeplink for these platforms.
+# This two parameters cannot be (bool)true at the same time. If you send both (bool)true at the same time, we will only give the deeplink in the response.
+# Default value is true for deeplink, and false for qrCode. These parameters are not required.
+-d '{"deeplink":true}'
+-d '{"qrCode":false}' 
 ```
 
 ##### Example response body
@@ -121,9 +134,7 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/start' \
 }
 ```
 
-#### If the validation method is WhatsApp or Telegram
-
-### Check that validation is complete.
+#### Check Validation (WhatsApp or Telegram)
 
 With the "reference" code you received in the previous response, you can check whether the validation has been completed by the user or not.
 
@@ -154,7 +165,9 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/check' \
 }
 ```
 
-#### If the validation method is SMS
+#### Start Validation (OTP)
+
+##### Country List
 
 Firstly, prepare a screen where your user will enter their phone number and country code. While preparing this screen, you can get the list of country information such as country code and phone code by sending a request to the "/country" endpoint like the example below.
 
@@ -164,6 +177,11 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/country' \
 --header 'Content-Type: application/json' \
 --header 'X-Vfk-Forwarded-For: END-USER-IP-ADDRESS' \
 --header 'X-Vfk-Server-Key: YOUR-SERVER-KEY' 
+```
+
+Other parameters you can send at this request:
+```bash
+-d '{"countryCode":"TR"}' country code parameter for the request. We return the sent countryCode parameter at the top of the list in the response. If you want a specific country (user's country detected by ip on your side for example) to be the first response parameter, you can send countryCode with your request. Not required.
 ```
 
 ##### Example response body
@@ -204,6 +222,15 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/send-otp' \
 -d '{"phoneNumber":"PHONE_NUMBER","countryCode":"COUNTRY_CODE"}'
 ```
 
+Other parameters you can send at this request:
+```bash
+#  For OTP verification to work best, you should send us the MCC and MNC code of the sim card in the user's device.
+-d '{"mcc":"999"}' # Mobile Country Code (MCC) of the sim card in the user's device. Default value is '999'. Not required.
+-d '{"mnc":"999"}' # Mobile Network Code (MNC) of the sim card in the user's device. Default value is '999'. Not required.
+
+ -d '{"lang":"en"}' # Language of end user. Default value is 'en' (English). You can set the language of the sent message. This parameter is not required.   
+```
+
 ##### Example response body
 ````json
 {
@@ -218,7 +245,7 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/send-otp' \
 }
 ````
 
-### Check Otp Result
+#### Check Validation (OTP)
 
 
 With the "reference" code you received in the previous response, you can check whether the validation has been completed by the user or not.
@@ -252,7 +279,7 @@ curl  --request POST 'https://web-rest.verifykit.com/v1.0/check-otp' \
 
 
 
-### Last Step : Get result by session id.
+### Last Step : Complete Validation
 
 This is where you will get your user's credentials such as phone number et cetera. You can complete the validation by sending the "session id" parameter of the validation here.
 
