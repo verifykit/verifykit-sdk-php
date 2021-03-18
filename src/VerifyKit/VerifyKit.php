@@ -53,8 +53,8 @@ class VerifyKit
      */
     public function getResult($sessionId)
     {
-        if (null === $sessionId || $sessionId == "") {
-            throw new SessionIdEmptyException("Session id cannot be empty.", 835002);
+        if (null === $sessionId || is_array($sessionId) || false == preg_match('/^[a-zA-Z0-9]+$/', $sessionId)) {
+            throw new SessionIdEmptyException("Session id is empty or not formal: " . json_encode($sessionId), 835002);
         }
 
         $response = $this->makeRequest('/result', self::METHOD_POST, array("sessionId" => $sessionId));
