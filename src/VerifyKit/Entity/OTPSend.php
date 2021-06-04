@@ -29,6 +29,9 @@ class OTPSend
     /** @var int */
     private $timeout;
 
+    /** @var int */
+    private $length;
+
 
     public function __construct($response)
     {
@@ -44,6 +47,7 @@ class OTPSend
             $this->success = true;
             $this->reference = $result["reference"];
             $this->timeout = $result["timeout"];
+            $this->length = $result["length"];
         }
     }
 
@@ -102,6 +106,14 @@ class OTPSend
     public function getTimeout()
     {
         return $this->timeout;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLength()
+    {
+        return $this->length;
     }
 
 
