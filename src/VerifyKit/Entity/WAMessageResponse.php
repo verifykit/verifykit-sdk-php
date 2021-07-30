@@ -18,7 +18,7 @@ class WAMessageResponse
     /** @var string */
     private $message;
 
-    /** @var \DateTime */
+    /** @var string */
     private $status;
 
     /** @var string */
@@ -80,7 +80,7 @@ class WAMessageResponse
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getStatus()
     {
