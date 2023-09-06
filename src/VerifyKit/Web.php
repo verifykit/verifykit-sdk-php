@@ -27,8 +27,6 @@ use VerifyKit\Exception\ValidationMethodNotValidException;
  */
 class Web
 {
-    const URL = 'https://web-rest.verifykit.com/v1.0';
-
     const METHOD_POST = 'POST';
     const METHOD_GET = 'GET';
 
@@ -37,6 +35,8 @@ class Web
 
     /** @var string */
     private $clientIp = null;
+
+    private $baseUrl = 'https://web-rest.verifykit.com/v1.0';
 
     /**
      * VerifyKit constructor.
@@ -300,7 +300,7 @@ class Web
     {
         $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_URL, self::URL . $endpoint);
+        curl_setopt($curl, CURLOPT_URL, $this->baseUrl . $endpoint);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
         curl_setopt($curl, CURLOPT_TIMEOUT, 30);
@@ -338,4 +338,13 @@ class Web
 
         return $response;
     }
+
+    /**
+     * @param string $baseUrl
+     */
+    public function setBaseUrl($baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+    }
+
 }
