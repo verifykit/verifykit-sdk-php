@@ -21,10 +21,11 @@ class VerifyKit
     /** @var string */
     private $serverKey;
 
-    private $baseUrl = 'https://api.verifykit.com/v1.0';
-
     /** @var string */
     private $clientIp = null;
+
+    /** @var string  */
+    private $baseUrl = 'https://api.verifykit.com/v1.0';
 
     /**
      * VerifyKit constructor.

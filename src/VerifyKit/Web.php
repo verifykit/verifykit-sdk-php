@@ -36,6 +36,7 @@ class Web
     /** @var string */
     private $clientIp = null;
 
+    /** @var string  */
     private $baseUrl = 'https://web-rest.verifykit.com/v1.0';
 
     /**
