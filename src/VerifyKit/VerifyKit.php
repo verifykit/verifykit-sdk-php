@@ -15,8 +15,6 @@ use VerifyKit\Exception\SessionIdEmptyException;
 class VerifyKit
 {
 
-    const URL = 'https://api.verifykit.com/v1.0';
-
     const METHOD_POST = 'POST';
     const METHOD_GET = 'GET';
 
@@ -25,6 +23,9 @@ class VerifyKit
 
     /** @var string */
     private $clientIp = null;
+
+    /** @var string  */
+    private $baseUrl = 'https://api.verifykit.com/v1.0';
 
     /**
      * VerifyKit constructor.
@@ -85,7 +86,7 @@ class VerifyKit
     {
         $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_URL, self::URL . $endpoint);
+        curl_setopt($curl, CURLOPT_URL, $this->baseUrl . $endpoint);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
         curl_setopt($curl, CURLOPT_TIMEOUT, 30);
@@ -123,4 +124,13 @@ class VerifyKit
 
         return $response;
     }
+
+    /**
+     * @param string $baseUrl
+     */
+    public function setBaseUrl($baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+    }
+
 }
