@@ -26,6 +26,9 @@ class Response
     /** @var string */
     private $phoneNumber;
 
+    /** @var array */
+    private $mobileNetwork;
+
     /** @var string */
     private $errorCode;
 
@@ -56,6 +59,7 @@ class Response
             $this->validationType = isset($result["validationType"]) ? $result["validationType"] : null;
             $this->validationDate = isset($result["validationDate"]) ? new \DateTime($result["validationDate"]) : null;
             $this->countryCode = isset($result["countryCode"]) ? $result["countryCode"] : null;
+            $this->mobileNetwork = isset($result["mobileNetwork"]) ? $result["mobileNetwork"] : null;
         }
     }
 
@@ -105,6 +109,14 @@ class Response
     public function getPhoneNumber()
     {
         return $this->phoneNumber;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getMobileNetwork()
+    {
+        return $this->mobileNetwork;
     }
 
     /**
